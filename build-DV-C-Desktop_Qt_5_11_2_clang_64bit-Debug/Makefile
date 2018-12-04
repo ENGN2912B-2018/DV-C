@@ -50,8 +50,8 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../DV-C/main.cpp \
-		../DV-C/mainwindow.cpp moc_mainwindow.cpp
+SOURCES       = ../DV-C/UI/main.cpp \
+		../DV-C/UI/mainwindow.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		moc_mainwindow.o
@@ -195,6 +195,7 @@ DIST          = ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_post.prf \
+		../DV-C/.qmake.stash \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/toolchain.prf \
@@ -222,8 +223,8 @@ DIST          = ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf \
-		../DV-C/DV-C.pro ../DV-C/mainwindow.h ../DV-C/main.cpp \
-		../DV-C/mainwindow.cpp
+		../DV-C/DV-C.pro ../DV-C/UI/mainwindow.h ../DV-C/UI/main.cpp \
+		../DV-C/UI/mainwindow.cpp
 QMAKE_TARGET  = DV-C
 DESTDIR       = 
 TARGET        = DV-C.app/Contents/MacOS/DV-C
@@ -384,6 +385,7 @@ Makefile: ../DV-C/DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qma
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/toolchain.prf \
@@ -556,6 +558,7 @@ Makefile: ../DV-C/DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qma
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/toolchain.prf:
@@ -617,9 +620,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/main.cpp ../DV-C/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -629,6 +632,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r DV-C.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -655,10 +659,10 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		../DV-C/mainwindow.h \
+		../DV-C/UI/mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
-	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/mainwindow.h -o moc_mainwindow.cpp
+	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -667,9 +671,9 @@ compiler_moc_source_clean:
 compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: ../DV-C/mainwindow.ui \
+ui_mainwindow.h: ../DV-C/UI/mainwindow.ui \
 		../../../../Qt/5.11.2/clang_64/bin/uic
-	/Users/senademir/Qt/5.11.2/clang_64/bin/uic ../DV-C/mainwindow.ui -o ui_mainwindow.h
+	/Users/senademir/Qt/5.11.2/clang_64/bin/uic ../DV-C/UI/mainwindow.ui -o ui_mainwindow.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -683,18 +687,18 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-main.o: ../DV-C/main.cpp ../DV-C/mainwindow.h \
+main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DV-C/main.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DV-C/UI/main.cpp
 
-mainwindow.o: ../DV-C/mainwindow.cpp ../DV-C/mainwindow.h \
+mainwindow.o: ../DV-C/UI/mainwindow.cpp ../DV-C/UI/mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		ui_mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../DV-C/mainwindow.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../DV-C/UI/mainwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
