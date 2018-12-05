@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../DV-C -I. -I../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang -F/Users/senademir/Qt/5.11.2/clang_64/lib
+CXXFLAGS      = -pipe -stdlib=libc++ -std=c++14 -g -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
+INCPATH       = -I../DV-C -I. -I../DV-C/UI -I../DV-C/glm -I../DV-C/glew-1.10.0/include -I../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang -F/Users/senademir/Qt/5.11.2/clang_64/lib
 QMAKE         = /Users/senademir/Qt/5.11.2/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = DV-C1.0.0
 DISTDIR = /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/.tmp/DV-C1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wl,-rpath,@executable_path/Frameworks -Wl,-rpath,/Users/senademir/Qt/5.11.2/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/senademir/Qt/5.11.2/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/senademir/Qt/5.11.2/clang_64/lib -framework QtOpenGL -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -51,10 +51,16 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../DV-C/UI/main.cpp \
-		../DV-C/UI/mainwindow.cpp moc_mainwindow.cpp
+		../DV-C/UI/mainwindow.cpp \
+		../DV-C/UI/glwidget.cpp \
+		../DV-C/glew-1.10.0/src/glew.c moc_mainwindow.cpp \
+		moc_glwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		glwidget.o \
+		glew.o \
+		moc_mainwindow.o \
+		moc_glwidget.o
 DIST          = ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/device_config.prf \
@@ -223,8 +229,12 @@ DIST          = ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf \
-		../DV-C/DV-C.pro ../DV-C/UI/mainwindow.h ../DV-C/UI/main.cpp \
-		../DV-C/UI/mainwindow.cpp
+		../DV-C/DV-C.pro ../DV-C/UI/mainwindow.h \
+		../DV-C/UI/glwidget.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h ../DV-C/UI/main.cpp \
+		../DV-C/UI/mainwindow.cpp \
+		../DV-C/UI/glwidget.cpp \
+		../DV-C/glew-1.10.0/src/glew.c
 QMAKE_TARGET  = DV-C
 DESTDIR       = 
 TARGET        = DV-C.app/Contents/MacOS/DV-C
@@ -414,6 +424,7 @@ Makefile: ../DV-C/DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qma
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf \
 		../DV-C/DV-C.pro \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/QtOpenGL.prl \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/QtGui.prl \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/QtCore.prl
@@ -587,6 +598,7 @@ Makefile: ../DV-C/DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qma
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf:
 ../DV-C/DV-C.pro:
+../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/QtOpenGL.prl:
 ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/QtGui.prl:
 ../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -620,8 +632,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h ../DV-C/UI/glwidget.h ../DV-C/glew-1.10.0/include/GL/glew.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp ../DV-C/UI/glwidget.cpp ../DV-C/glew-1.10.0/src/glew.c $(DISTDIR)/
 	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.ui $(DISTDIR)/
 
 
@@ -652,17 +664,27 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -std=c++14 -g -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_glwidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_glwidget.cpp
 moc_mainwindow.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../DV-C/UI/glwidget.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
 		../DV-C/UI/mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
-	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/mainwindow.h -o moc_mainwindow.cpp
+	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/UI -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glm -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glew-1.10.0/include -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/mainwindow.h -o moc_mainwindow.cpp
+
+moc_glwidget.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		../DV-C/UI/glwidget.h \
+		moc_predefs.h \
+		../../../../Qt/5.11.2/clang_64/bin/moc
+	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/UI -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glm -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glew-1.10.0/include -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/glwidget.h -o moc_glwidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -690,6 +712,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../DV-C/UI/glwidget.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DV-C/UI/main.cpp
@@ -697,11 +722,29 @@ main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 mainwindow.o: ../DV-C/UI/mainwindow.cpp ../DV-C/UI/mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_mainwindow.h
+		../DV-C/UI/glwidget.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		ui_mainwindow.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../DV-C/UI/mainwindow.cpp
+
+glwidget.o: ../DV-C/UI/glwidget.cpp ../DV-C/UI/glwidget.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../DV-C/UI/glwidget.cpp
+
+glew.o: ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glew-1.10.0/include/GL/wglew.h \
+		../DV-C/glew-1.10.0/include/GL/glxew.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o glew.o ../DV-C/glew-1.10.0/src/glew.c
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_glwidget.o: moc_glwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_glwidget.o moc_glwidget.cpp
 
 ####### Install
 
