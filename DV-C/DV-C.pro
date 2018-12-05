@@ -45,3 +45,10 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    shader/shaders.qrc
+
+DISTFILES += \
+    shader/shader.vert \
+    shader/shader.frag
