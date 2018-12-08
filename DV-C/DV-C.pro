@@ -31,12 +31,18 @@ SOURCES += \
     UI/main.cpp \
     UI/mainwindow.cpp \
     UI/glwidget.cpp \
-    glew-1.10.0/src/glew.c
+    glew-1.10.0/src/glew.c \
+    glData/vbo.cpp \
+    glData/vao.cpp \
+    Jellyfish/jellyfish.cpp
 
 HEADERS += \
     UI/mainwindow.h \
     UI/glwidget.h \
-    glew-1.10.0/include/GL/glew.h
+    glew-1.10.0/include/GL/glew.h \
+    glData/vbo.h \
+    glData/vao.h \
+    Jellyfish/jellyfish.h
 
 FORMS += \
     UI/mainwindow.ui

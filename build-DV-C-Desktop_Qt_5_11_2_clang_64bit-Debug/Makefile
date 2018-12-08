@@ -53,13 +53,19 @@ OBJECTS_DIR   = ./
 SOURCES       = ../DV-C/UI/main.cpp \
 		../DV-C/UI/mainwindow.cpp \
 		../DV-C/UI/glwidget.cpp \
-		../DV-C/glew-1.10.0/src/glew.c qrc_shaders.cpp \
+		../DV-C/glew-1.10.0/src/glew.c \
+		../DV-C/glData/vbo.cpp \
+		../DV-C/glData/vao.cpp \
+		../DV-C/Jellyfish/jellyfish.cpp qrc_shaders.cpp \
 		moc_mainwindow.cpp \
 		moc_glwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		glwidget.o \
 		glew.o \
+		vbo.o \
+		vao.o \
+		jellyfish.o \
 		qrc_shaders.o \
 		moc_mainwindow.o \
 		moc_glwidget.o
@@ -235,10 +241,16 @@ DIST          = ../DV-C/shader/shader.vert \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf \
 		../DV-C/DV-C.pro ../DV-C/UI/mainwindow.h \
 		../DV-C/UI/glwidget.h \
-		../DV-C/glew-1.10.0/include/GL/glew.h ../DV-C/UI/main.cpp \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/jellyfish.h ../DV-C/UI/main.cpp \
 		../DV-C/UI/mainwindow.cpp \
 		../DV-C/UI/glwidget.cpp \
-		../DV-C/glew-1.10.0/src/glew.c
+		../DV-C/glew-1.10.0/src/glew.c \
+		../DV-C/glData/vbo.cpp \
+		../DV-C/glData/vao.cpp \
+		../DV-C/Jellyfish/jellyfish.cpp
 QMAKE_TARGET  = DV-C
 DESTDIR       = 
 TARGET        = DV-C.app/Contents/MacOS/DV-C
@@ -639,8 +651,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../DV-C/shader/shaders.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h ../DV-C/UI/glwidget.h ../DV-C/glew-1.10.0/include/GL/glew.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp ../DV-C/UI/glwidget.cpp ../DV-C/glew-1.10.0/src/glew.c $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h ../DV-C/UI/glwidget.h ../DV-C/glew-1.10.0/include/GL/glew.h ../DV-C/glData/vbo.h ../DV-C/glData/vao.h ../DV-C/Jellyfish/jellyfish.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp ../DV-C/UI/glwidget.cpp ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glData/vbo.cpp ../DV-C/glData/vao.cpp ../DV-C/Jellyfish/jellyfish.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.ui $(DISTDIR)/
 
 
@@ -767,6 +779,12 @@ moc_mainwindow.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Heade
 		../DV-C/glm/gtc/matrix_transform.hpp \
 		../DV-C/glm/gtc/matrix_transform.inl \
 		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
 		../DV-C/UI/mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
@@ -855,6 +873,12 @@ moc_glwidget.cpp: ../DV-C/glew-1.10.0/include/GL/glew.h \
 		../DV-C/glm/gtc/matrix_transform.hpp \
 		../DV-C/glm/gtc/matrix_transform.inl \
 		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
 		../DV-C/UI/glwidget.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
@@ -970,6 +994,12 @@ main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 		../DV-C/glm/gtc/matrix_transform.hpp \
 		../DV-C/glm/gtc/matrix_transform.inl \
 		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DV-C/UI/main.cpp
@@ -1061,6 +1091,12 @@ mainwindow.o: ../DV-C/UI/mainwindow.cpp ../DV-C/UI/mainwindow.h \
 		../DV-C/glm/gtc/matrix_transform.hpp \
 		../DV-C/glm/gtc/matrix_transform.inl \
 		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
 		ui_mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h
@@ -1150,6 +1186,12 @@ glwidget.o: ../DV-C/UI/glwidget.cpp ../DV-C/UI/glwidget.h \
 		../DV-C/glm/gtc/matrix_transform.hpp \
 		../DV-C/glm/gtc/matrix_transform.inl \
 		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QFile \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qfile.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTextStream \
@@ -1160,6 +1202,20 @@ glew.o: ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glew-1.10.0/include/GL/glew.h \
 		../DV-C/glew-1.10.0/include/GL/wglew.h \
 		../DV-C/glew-1.10.0/include/GL/glxew.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o glew.o ../DV-C/glew-1.10.0/src/glew.c
+
+vbo.o: ../DV-C/glData/vbo.cpp ../DV-C/glData/vbo.h \
+		/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vbo.o ../DV-C/glData/vbo.cpp
+
+vao.o: ../DV-C/glData/vao.cpp ../DV-C/glData/vao.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vao.o ../DV-C/glData/vao.cpp
+
+jellyfish.o: ../DV-C/Jellyfish/jellyfish.cpp ../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o jellyfish.o ../DV-C/Jellyfish/jellyfish.cpp
 
 qrc_shaders.o: qrc_shaders.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_shaders.o qrc_shaders.cpp
