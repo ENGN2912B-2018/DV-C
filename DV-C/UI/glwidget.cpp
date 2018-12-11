@@ -21,7 +21,7 @@ void GLWidget::initializeGL() {
 
     glClearColor(0.09f, 0.6f, 0.8f, 0.0f);
 
-    m_program = createShaderProgram(":/shaders/shader.vert", ":/shaders/shader.frag");
+    m_program = createShaderProgram(":/shader/shader.vert", ":/shader/shader.frag");
     setCameraMatrices();
 }
 
@@ -34,6 +34,11 @@ void GLWidget::paintGL() {
     glUniformMatrix4fv(glGetUniformLocation(m_program, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(m_view));
     glUniformMatrix4fv(glGetUniformLocation(m_program, "projMatrix"), 1, GL_FALSE, glm::value_ptr(m_projection));
 
+    m_jelly = std::make_unique<head>();
+    m_jelly->initializeShape();
+    m_jelly->setVertexData(m_jelly->getVertexData(), m_jelly->getVertexSize(), m_jelly->getVertexNumber());
+    m_jelly->buildVAO();
+    m_jelly->draw();
     glUseProgram(0);
 }
 
@@ -67,9 +72,10 @@ GLuint GLWidget::createShader(GLenum shaderType, const char *filepath){
     std::string shaderCode;
     QString filepathString = QString(filepath);
     QFile file(filepathString);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream stream(&file);
     shaderCode = stream.readAll().toStdString();
+
     const char *codePointer = shaderCode.c_str();
     glShaderSource(shaderID, 1, &codePointer, nullptr);
     glCompileShader(shaderID);
@@ -78,5 +84,8 @@ GLuint GLWidget::createShader(GLenum shaderType, const char *filepath){
 
 void GLWidget::setCameraMatrices() {
     m_model = glm::mat4x4(1.f);
+    m_view = glm::translate(glm::vec3(0, 0, -10.f)) * glm::rotate(0.5f, glm::vec3(1,0,0))*
+            glm::rotate(0.f, glm::vec3(0,1,0));
+    m_projection = glm::perspective(0.8f, static_cast<float>(width()/height()), 0.1f, 100.f);
     update();
 }

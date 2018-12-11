@@ -1,5 +1,7 @@
 #include "vao.h"
 
+#include <iostream>
+
 VAO::VAO(const VBO &vbo, int vertexNumber):
     m_handle(0),
     m_numberOfVertices(vertexNumber),
@@ -8,8 +10,8 @@ VAO::VAO(const VBO &vbo, int vertexNumber):
     glGenVertexArrays(1, &m_handle);
     bind();
     vbo.bindAndEnable();
-    unbind();
     vbo.unbind();
+    unbind();
 }
 
 VAO::VAO(VAO &&that):

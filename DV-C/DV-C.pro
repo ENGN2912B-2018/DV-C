@@ -34,7 +34,8 @@ SOURCES += \
     glew-1.10.0/src/glew.c \
     glData/vbo.cpp \
     glData/vao.cpp \
-    Jellyfish/jellyfish.cpp
+    Jellyfish/jellyfish.cpp \
+    Jellyfish/head.cpp
 
 HEADERS += \
     UI/mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     glew-1.10.0/include/GL/glew.h \
     glData/vbo.h \
     glData/vao.h \
-    Jellyfish/jellyfish.h
+    Jellyfish/jellyfish.h \
+    Jellyfish/head.h
 
 FORMS += \
     UI/mainwindow.ui

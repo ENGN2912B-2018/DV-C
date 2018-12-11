@@ -56,7 +56,8 @@ SOURCES       = ../DV-C/UI/main.cpp \
 		../DV-C/glew-1.10.0/src/glew.c \
 		../DV-C/glData/vbo.cpp \
 		../DV-C/glData/vao.cpp \
-		../DV-C/Jellyfish/jellyfish.cpp qrc_shaders.cpp \
+		../DV-C/Jellyfish/jellyfish.cpp \
+		../DV-C/Jellyfish/head.cpp qrc_shaders.cpp \
 		moc_mainwindow.cpp \
 		moc_glwidget.cpp
 OBJECTS       = main.o \
@@ -66,6 +67,7 @@ OBJECTS       = main.o \
 		vbo.o \
 		vao.o \
 		jellyfish.o \
+		head.o \
 		qrc_shaders.o \
 		moc_mainwindow.o \
 		moc_glwidget.o
@@ -244,13 +246,15 @@ DIST          = ../DV-C/shader/shader.vert \
 		../DV-C/glew-1.10.0/include/GL/glew.h \
 		../DV-C/glData/vbo.h \
 		../DV-C/glData/vao.h \
-		../DV-C/Jellyfish/jellyfish.h ../DV-C/UI/main.cpp \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/Jellyfish/head.h ../DV-C/UI/main.cpp \
 		../DV-C/UI/mainwindow.cpp \
 		../DV-C/UI/glwidget.cpp \
 		../DV-C/glew-1.10.0/src/glew.c \
 		../DV-C/glData/vbo.cpp \
 		../DV-C/glData/vao.cpp \
-		../DV-C/Jellyfish/jellyfish.cpp
+		../DV-C/Jellyfish/jellyfish.cpp \
+		../DV-C/Jellyfish/head.cpp
 QMAKE_TARGET  = DV-C
 DESTDIR       = 
 TARGET        = DV-C.app/Contents/MacOS/DV-C
@@ -651,8 +655,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../DV-C/shader/shaders.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h ../DV-C/UI/glwidget.h ../DV-C/glew-1.10.0/include/GL/glew.h ../DV-C/glData/vbo.h ../DV-C/glData/vao.h ../DV-C/Jellyfish/jellyfish.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp ../DV-C/UI/glwidget.cpp ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glData/vbo.cpp ../DV-C/glData/vao.cpp ../DV-C/Jellyfish/jellyfish.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h ../DV-C/UI/glwidget.h ../DV-C/glew-1.10.0/include/GL/glew.h ../DV-C/glData/vbo.h ../DV-C/glData/vao.h ../DV-C/Jellyfish/jellyfish.h ../DV-C/Jellyfish/head.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp ../DV-C/UI/glwidget.cpp ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glData/vbo.cpp ../DV-C/glData/vao.cpp ../DV-C/Jellyfish/jellyfish.cpp ../DV-C/Jellyfish/head.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.ui $(DISTDIR)/
 
 
@@ -681,7 +685,9 @@ compiler_rcc_make_all: qrc_shaders.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_shaders.cpp
 qrc_shaders.cpp: ../DV-C/shader/shaders.qrc \
-		../../../../Qt/5.11.2/clang_64/bin/rcc
+		../../../../Qt/5.11.2/clang_64/bin/rcc \
+		../DV-C/shader/shader.frag \
+		../DV-C/shader/shader.vert
 	/Users/senademir/Qt/5.11.2/clang_64/bin/rcc -name shaders ../DV-C/shader/shaders.qrc -o qrc_shaders.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -1204,18 +1210,178 @@ glew.o: ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glew-1.10.0/include/GL/glew.h \
 	$(CC) -c $(CFLAGS) $(INCPATH) -o glew.o ../DV-C/glew-1.10.0/src/glew.c
 
 vbo.o: ../DV-C/glData/vbo.cpp ../DV-C/glData/vbo.h \
-		/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h
+		../DV-C/glew-1.10.0/include/GL/glew.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vbo.o ../DV-C/glData/vbo.cpp
 
 vao.o: ../DV-C/glData/vao.cpp ../DV-C/glData/vao.h \
 		../DV-C/glew-1.10.0/include/GL/glew.h \
-		../DV-C/glData/vbo.h \
-		/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers/gl.h
+		../DV-C/glData/vbo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vao.o ../DV-C/glData/vao.cpp
 
 jellyfish.o: ../DV-C/Jellyfish/jellyfish.cpp ../DV-C/Jellyfish/jellyfish.h \
-		../DV-C/glew-1.10.0/include/GL/glew.h
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o jellyfish.o ../DV-C/Jellyfish/jellyfish.cpp
+
+head.o: ../DV-C/Jellyfish/head.cpp ../DV-C/Jellyfish/head.h \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o head.o ../DV-C/Jellyfish/head.cpp
 
 qrc_shaders.o: qrc_shaders.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_shaders.o qrc_shaders.cpp

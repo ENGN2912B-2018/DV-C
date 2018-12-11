@@ -1,11 +1,15 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
+#define GLM_FORCE_RADIANS
+
 #include "GL/glew.h"
 #include <QGLWidget>
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "Jellyfish/jellyfish.h"
+#include "Jellyfish/head.h"
 
 
 class GLWidget : public QGLWidget
@@ -29,6 +33,7 @@ private:
     glm::mat4x4 m_model;
     glm::mat4x4 m_view;
     glm::mat4x4 m_projection;
+    std::unique_ptr<jellyfish> m_jelly;
 };
 
 #endif // GLWIDGET_H
