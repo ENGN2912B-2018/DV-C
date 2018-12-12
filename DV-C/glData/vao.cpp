@@ -38,6 +38,7 @@ VAO::~VAO(){
 
 void VAO::draw(){
     glDrawArrays(GL_TRIANGLES, 0, m_numberOfVertices);
+
 }
 
 void VAO::bind(){

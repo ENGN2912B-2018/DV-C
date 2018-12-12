@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT += core gui opengl
 
 TARGET = DV-C
 TEMPLATE = app
@@ -23,6 +23,12 @@ TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++14
 CONFIG += c++14
+
+macx {
+    QMAKE_CFLAGS_X86_64 += -macosx-version-min=10.7
+    QMAKE_CXXFLAGS_X86_64 = $$QMAKE_CFLAGS_X86_64
+    CONFIG += c++11
+}
 
 INCLUDEPATH += UI glm glew-1.10.0/include
 DEPENDPATH += UI glm glew-1.10.0/include
@@ -50,9 +56,9 @@ FORMS += \
     UI/mainwindow.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+#qnx: target.path = /tmp/$${TARGET}/bin
+#else: unix:!android: target.path = /opt/$${TARGET}/bin
+#!isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
     shader/shaders.qrc

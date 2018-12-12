@@ -18,7 +18,6 @@ jellyfish::~jellyfish(){
 void jellyfish::setVertexData(GLfloat *data, int size, int numVertices){
     m_data = data;
     m_size = size;
-    std::cout<< m_size<< std::endl;
     m_numberOfVertices = numVertices;
 }
 

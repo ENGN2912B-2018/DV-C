@@ -791,6 +791,10 @@ moc_mainwindow.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Heade
 		../DV-C/glm/gtc/constants.inl \
 		../DV-C/glm/gtc/quaternion.inl \
 		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		../DV-C/UI/mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
@@ -885,6 +889,10 @@ moc_glwidget.cpp: ../DV-C/glew-1.10.0/include/GL/glew.h \
 		../DV-C/glm/gtc/constants.inl \
 		../DV-C/glm/gtc/quaternion.inl \
 		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		../DV-C/UI/glwidget.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
@@ -1006,6 +1014,10 @@ main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 		../DV-C/glm/gtc/constants.inl \
 		../DV-C/glm/gtc/quaternion.inl \
 		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DV-C/UI/main.cpp
@@ -1103,6 +1115,10 @@ mainwindow.o: ../DV-C/UI/mainwindow.cpp ../DV-C/UI/mainwindow.h \
 		../DV-C/glm/gtc/constants.inl \
 		../DV-C/glm/gtc/quaternion.inl \
 		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		ui_mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h
@@ -1198,6 +1214,10 @@ glwidget.o: ../DV-C/UI/glwidget.cpp ../DV-C/UI/glwidget.h \
 		../DV-C/glm/gtc/constants.inl \
 		../DV-C/glm/gtc/quaternion.inl \
 		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QFile \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qfile.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTextStream \
@@ -1394,20 +1414,9 @@ moc_glwidget.o: moc_glwidget.cpp
 
 ####### Install
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/opt/DV-C/bin || mkdir -p $(INSTALL_ROOT)/opt/DV-C/bin
-	$(DEL_FILE) -r $(INSTALL_ROOT)/opt/DV-C/bin/DV-C.app
-	
-	-$(QINSTALL) DV-C.app $(INSTALL_ROOT)/opt/DV-C/bin/DV-C.app
+install:  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/opt/DV-C/bin/DV-C.app
-	-$(DEL_DIR) $(INSTALL_ROOT)/opt/DV-C/bin/ 
-
-
-install: install_target  FORCE
-
-uninstall: uninstall_target  FORCE
+uninstall:  FORCE
 
 FORCE:
 

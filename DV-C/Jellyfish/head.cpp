@@ -19,6 +19,7 @@ int head::getVertexNumber(){
 }
 
 void head::initializeShape(){
+
     findVertices();
     addVertices();
 }
@@ -58,5 +59,18 @@ void head::addVertices(){
         m_vertices.push_back(m_vertexMap[i+1][0]);
         m_vertices.push_back(m_vertexMap[i+1][1]);
         m_vertices.push_back(m_vertexMap[i+1][2]);
+
+        m_vertices.push_back(m_vertexMap[i+NUM_VERTICES+1][0]);
+        m_vertices.push_back(m_vertexMap[i+NUM_VERTICES+1][1]);
+        m_vertices.push_back(m_vertexMap[i+NUM_VERTICES+1][2]);
+
+        m_vertices.push_back(m_vertexMap[i+NUM_VERTICES+2][0]);
+        m_vertices.push_back(m_vertexMap[i+NUM_VERTICES+2][1]);
+        m_vertices.push_back(m_vertexMap[i+NUM_VERTICES+2][2]);
+
+        m_vertices.push_back(m_vertexMap[i+1][0]);
+        m_vertices.push_back(m_vertexMap[i+1][1]);
+        m_vertices.push_back(m_vertexMap[i+1][2]);
+
     }
 }

@@ -16,7 +16,7 @@ class GLWidget : public QGLWidget
 {
     Q_OBJECT
 public:
-    GLWidget(QWidget *parent = nullptr);
+    GLWidget(QGLFormat format, QWidget *parent = nullptr);
     ~GLWidget();
 
 protected:
