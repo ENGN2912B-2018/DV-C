@@ -74,9 +74,10 @@ void jellyfish::readOBJ(const char *path){
         else if(std::strcmp(lineHeader, "f") == 0){
             unsigned int vert1, vert2, vert3;
             int matches = std::fscanf(file, "%d %d %d\n", &vert1, &vert2, &vert3);
-            vertexIndices.push_back(vert1);
-            vertexIndices.push_back(vert2);
             vertexIndices.push_back(vert3);
+            vertexIndices.push_back(vert2);
+            vertexIndices.push_back(vert1);
+
         }
         else {
             char commentBuffer[1000];
@@ -95,7 +96,7 @@ void jellyfish::readOBJ(const char *path){
 
 void jellyfish::initializeShape(){
     readOBJ("/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/Jellyfish/esen.obj");
-    for(int i=0; i<m_vertices.size(); i++){
-        std::cout<<m_vertices[i]<<std::endl;
-    }
+//    for(int i=0; i<m_vertices.size(); i++){
+//        std::cout<<m_vertices[i]<<std::endl;
+//    }
 }

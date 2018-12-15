@@ -28,12 +28,19 @@ protected:
     GLuint createShader(GLenum shaderType, const char *filepath);
     void setCameraMatrices();
 
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void wheelEvent(QWheelEvent *e);
+
 private:
     GLuint m_program;
     glm::mat4x4 m_model;
     glm::mat4x4 m_view;
     glm::mat4x4 m_projection;
     std::unique_ptr<jellyfish> m_jelly;
+
+    float m_angleX, m_angleY, m_angleZ;
+    QPoint m_prevMPos;
 };
 
 #endif // GLWIDGET_H
