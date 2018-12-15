@@ -74,9 +74,10 @@ void jellyfish::readOBJ(const char *path){
         else if(std::strcmp(lineHeader, "f") == 0){
             unsigned int vert1, vert2, vert3;
             int matches = std::fscanf(file, "%d %d %d\n", &vert1, &vert2, &vert3);
-            vertexIndices.push_back(vert3);
-            vertexIndices.push_back(vert2);
+
             vertexIndices.push_back(vert1);
+            vertexIndices.push_back(vert2);
+            vertexIndices.push_back(vert3);
 
         }
         else {
