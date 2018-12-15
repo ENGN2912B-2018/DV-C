@@ -107,9 +107,7 @@ GLuint GLWidget::createShader(GLenum shaderType, const char *filepath){
     const char *codePointer = shaderCode.c_str();
     glShaderSource(shaderID, 1, &codePointer, nullptr);
     glCompileShader(shaderID);
-    GLint val = GL_FALSE;
     int info;
-    //glGetShaderiv(shaderID, GL_COMPILE_STATUS, &val);
     glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &info);
     if(info > 0){
         std::vector<char> infoLog(info);
