@@ -19,9 +19,10 @@ void GLWidget::initializeGL() {
     resizeGL(width(), height());
 
     glEnable(GL_DEPTH_TEST);
+    //glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
 
-    glClearColor(1.f, 0.f, 0.f, 0.f);
+    glClearColor(0.f, 0.5f, 0.5f, 0.f);
 
     m_program = createShaderProgram(":/shader/shader.vert", ":/shader/shader.frag");
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -48,7 +49,6 @@ void GLWidget::paintGL() {
     glUniform4fv(glGetUniformLocation(m_program, "color"), 1, glm::value_ptr(color));
 
     m_jelly->draw();
-
     glUseProgram(0);
 }
 
@@ -120,7 +120,7 @@ GLuint GLWidget::createShader(GLenum shaderType, const char *filepath){
 
 void GLWidget::setCameraMatrices() {
     m_model = glm::mat4x4(1.f);
-    m_view = glm::translate(glm::vec3(0, 0, -10.f)) * glm::rotate(0.5f, glm::vec3(1,0,0))*
+    m_view = glm::translate(glm::vec3(0, 6.f, -10.f)) * glm::rotate(0.5f, glm::vec3(1,0,0))*
             glm::rotate(0.f, glm::vec3(0,1,0));
     m_projection = glm::perspective(0.8f, static_cast<float>(width()/height()), 0.1f, 100.f);
     update();

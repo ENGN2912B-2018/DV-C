@@ -1,4 +1,5 @@
 #include "head.h"
+#include "glm/gtc/type_ptr.hpp"
 
 head::head()
     :jellyfish()
@@ -15,11 +16,11 @@ GLfloat* head::getVertexData(){
 }
 
 int head::getVertexNumber(){
-    return 243;
+    return 500;
 }
 
 void head::initializeShape(){
-
+    //readOBJ();
     findVertices();
     addVertices();
 }
@@ -43,6 +44,7 @@ void head::findVertices(){
 void head::addVertices(){
     int skipCount = NUM_VERTICES;
     int endCount = m_vertexMap.size()-(NUM_VERTICES+2);
+    //int endCount = m_vertexMap.size();
     for(int i=0; i<endCount; i++){
         if(i == skipCount){
             i++;

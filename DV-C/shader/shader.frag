@@ -1,5 +1,5 @@
 #version 400 core
-in vec3 fragC;
+in vec4 fragC;
 out vec4 fragColor;
 
 void main(void)

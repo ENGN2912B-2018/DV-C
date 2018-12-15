@@ -23,13 +23,15 @@ public:
     void buildVAO();
     void draw();
     virtual GLfloat* getVertexData();
-    virtual void initializeShape() = 0;
+    virtual void initializeShape();
     virtual int getVertexNumber();
     virtual int getVertexSize();
+    void readOBJ(const char *path);
 
 protected:
     std::vector<GLfloat> m_vertices;
     std::map<int, glm::vec3> m_vertexMap;
+    std::vector<glm::vec3> m_vert;
 
 private:
     GLfloat *m_data;

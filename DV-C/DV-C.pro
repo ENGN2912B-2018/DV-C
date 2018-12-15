@@ -30,8 +30,8 @@ macx {
     CONFIG += c++11
 }
 
-INCLUDEPATH += UI glm glew-1.10.0/include
-DEPENDPATH += UI glm glew-1.10.0/include
+INCLUDEPATH += Jellyfish UI glm glew-1.10.0/include
+DEPENDPATH += Jellyfish UI glm glew-1.10.0/include
 
 SOURCES += \
     UI/main.cpp \
