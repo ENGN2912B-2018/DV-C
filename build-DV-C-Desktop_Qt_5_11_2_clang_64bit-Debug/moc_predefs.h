@@ -336,7 +336,7 @@
 #define __UINT_LEAST8_MAX__ 255
 #define __UINT_LEAST8_TYPE__ unsigned char
 #define __USER_LABEL_PREFIX__ _
-#define __VERSION__ "4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.11.45.2)"
+#define __VERSION__ "4.2.1 Compatible Apple LLVM 10.0.0 (clang-1000.11.45.5)"
 #define __WCHAR_MAX__ 2147483647
 #define __WCHAR_TYPE__ int
 #define __WCHAR_WIDTH__ 32
@@ -351,23 +351,30 @@
 #define __clang_major__ 10
 #define __clang_minor__ 0
 #define __clang_patchlevel__ 0
-#define __clang_version__ "10.0.0 (clang-1000.11.45.2)"
+#define __clang_version__ "10.0.0 (clang-1000.11.45.5)"
 #define __core2 1
 #define __core2__ 1
-#define __cplusplus 201103L
+#define __cplusplus 201402L
+#define __cpp_aggregate_nsdmi 201304
 #define __cpp_alias_templates 200704
 #define __cpp_attributes 200809
-#define __cpp_constexpr 200704
+#define __cpp_binary_literals 201304
+#define __cpp_constexpr 201304
 #define __cpp_decltype 200707
+#define __cpp_decltype_auto 201304
 #define __cpp_delegating_constructors 200604
+#define __cpp_digit_separators 201309
 #define __cpp_exceptions 199711
+#define __cpp_generic_lambdas 201304
 #define __cpp_inheriting_constructors 201511
+#define __cpp_init_captures 201304
 #define __cpp_initializer_lists 200806
 #define __cpp_lambdas 200907
 #define __cpp_nsdmi 200809
 #define __cpp_range_based_for 200907
 #define __cpp_raw_strings 200710
 #define __cpp_ref_qualifiers 200710
+#define __cpp_return_type_deduction 201304
 #define __cpp_rtti 199711
 #define __cpp_rvalue_references 200610
 #define __cpp_static_assert 200410
@@ -375,6 +382,7 @@
 #define __cpp_unicode_characters 200704
 #define __cpp_unicode_literals 200710
 #define __cpp_user_defined_literals 200809
+#define __cpp_variable_templates 201304
 #define __cpp_variadic_templates 200704
 #define __llvm__ 1
 #define __nonnull _Nonnull

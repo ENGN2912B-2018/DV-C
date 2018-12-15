@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../DV-C -I. -I../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang -F/Users/senademir/Qt/5.11.2/clang_64/lib
+CXXFLAGS      = -pipe -stdlib=libc++ -std=c++14 -g -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -fPIC $(DEFINES)
+INCPATH       = -I../DV-C -I. -I../DV-C/UI -I../DV-C/glm -I../DV-C/glew-1.10.0/include -I../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang -F/Users/senademir/Qt/5.11.2/clang_64/lib
 QMAKE         = /Users/senademir/Qt/5.11.2/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = DV-C1.0.0
 DISTDIR = /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/.tmp/DV-C1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wl,-rpath,@executable_path/Frameworks -Wl,-rpath,/Users/senademir/Qt/5.11.2/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/senademir/Qt/5.11.2/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/senademir/Qt/5.11.2/clang_64/lib -framework QtOpenGL -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -51,11 +51,29 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../DV-C/UI/main.cpp \
-		../DV-C/UI/mainwindow.cpp moc_mainwindow.cpp
+		../DV-C/UI/mainwindow.cpp \
+		../DV-C/UI/glwidget.cpp \
+		../DV-C/glew-1.10.0/src/glew.c \
+		../DV-C/glData/vbo.cpp \
+		../DV-C/glData/vao.cpp \
+		../DV-C/Jellyfish/jellyfish.cpp \
+		../DV-C/Jellyfish/head.cpp qrc_shaders.cpp \
+		moc_mainwindow.cpp \
+		moc_glwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
-DIST          = ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
+		glwidget.o \
+		glew.o \
+		vbo.o \
+		vao.o \
+		jellyfish.o \
+		head.o \
+		qrc_shaders.o \
+		moc_mainwindow.o \
+		moc_glwidget.o
+DIST          = ../DV-C/shader/shader.vert \
+		../DV-C/shader/shader.frag \
+		../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/qdevice.pri \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/device_config.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/common/unix.conf \
@@ -223,8 +241,20 @@ DIST          = ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf \
-		../DV-C/DV-C.pro ../DV-C/UI/mainwindow.h ../DV-C/UI/main.cpp \
-		../DV-C/UI/mainwindow.cpp
+		../DV-C/DV-C.pro ../DV-C/UI/mainwindow.h \
+		../DV-C/UI/glwidget.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/Jellyfish/head.h ../DV-C/UI/main.cpp \
+		../DV-C/UI/mainwindow.cpp \
+		../DV-C/UI/glwidget.cpp \
+		../DV-C/glew-1.10.0/src/glew.c \
+		../DV-C/glData/vbo.cpp \
+		../DV-C/glData/vao.cpp \
+		../DV-C/Jellyfish/jellyfish.cpp \
+		../DV-C/Jellyfish/head.cpp
 QMAKE_TARGET  = DV-C
 DESTDIR       = 
 TARGET        = DV-C.app/Contents/MacOS/DV-C
@@ -414,6 +444,8 @@ Makefile: ../DV-C/DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qma
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf \
 		../DV-C/DV-C.pro \
+		../DV-C/shader/shaders.qrc \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/QtOpenGL.prl \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/QtGui.prl \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/QtCore.prl
@@ -587,6 +619,8 @@ Makefile: ../DV-C/DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qma
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/yacc.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/lex.prf:
 ../DV-C/DV-C.pro:
+../DV-C/shader/shaders.qrc:
+../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/QtOpenGL.prl:
 ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../../Qt/5.11.2/clang_64/lib/QtGui.framework/QtGui.prl:
 ../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -619,9 +653,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/shader/shaders.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.h ../DV-C/UI/glwidget.h ../DV-C/glew-1.10.0/include/GL/glew.h ../DV-C/glData/vbo.h ../DV-C/glData/vao.h ../DV-C/Jellyfish/jellyfish.h ../DV-C/Jellyfish/head.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.cpp ../DV-C/UI/glwidget.cpp ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glData/vbo.cpp ../DV-C/glData/vao.cpp ../DV-C/Jellyfish/jellyfish.cpp ../DV-C/Jellyfish/head.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../DV-C/UI/mainwindow.ui $(DISTDIR)/
 
 
@@ -646,23 +681,222 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_shaders.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_shaders.cpp
+qrc_shaders.cpp: ../DV-C/shader/shaders.qrc \
+		../../../../Qt/5.11.2/clang_64/bin/rcc \
+		../DV-C/shader/shader.frag \
+		../DV-C/shader/shader.vert
+	/Users/senademir/Qt/5.11.2/clang_64/bin/rcc -name shaders ../DV-C/shader/shaders.qrc -o qrc_shaders.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -std=c++14 -g -std=gnu++1y $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.11 -Wall -W -dM -E -o moc_predefs.h ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_glwidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_glwidget.cpp
 moc_mainwindow.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../DV-C/UI/glwidget.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl \
+		../DV-C/glm/gtx/transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.inl \
+		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		../DV-C/UI/mainwindow.h \
 		moc_predefs.h \
 		../../../../Qt/5.11.2/clang_64/bin/moc
-	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/mainwindow.h -o moc_mainwindow.cpp
+	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/UI -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glm -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glew-1.10.0/include -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/mainwindow.h -o moc_mainwindow.cpp
+
+moc_glwidget.cpp: ../DV-C/glew-1.10.0/include/GL/glew.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl \
+		../DV-C/glm/gtx/transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.inl \
+		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
+		../DV-C/UI/glwidget.h \
+		moc_predefs.h \
+		../../../../Qt/5.11.2/clang_64/bin/moc
+	/Users/senademir/Qt/5.11.2/clang_64/bin/moc $(DEFINES) --include /Users/senademir/Desktop/Jellyfish/DV-C/build-DV-C-Desktop_Qt_5_11_2_clang_64bit-Debug/moc_predefs.h -I/Users/senademir/Qt/5.11.2/clang_64/mkspecs/macx-clang -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/UI -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glm -I/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/glew-1.10.0/include -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtGui.framework/Headers -I/Users/senademir/Qt/5.11.2/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/include -F/Users/senademir/Qt/5.11.2/clang_64/lib ../DV-C/UI/glwidget.h -o moc_glwidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -683,13 +917,107 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
 main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../DV-C/UI/glwidget.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl \
+		../DV-C/glm/gtx/transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.inl \
+		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../DV-C/UI/main.cpp
@@ -697,28 +1025,398 @@ main.o: ../DV-C/UI/main.cpp ../DV-C/UI/mainwindow.h \
 mainwindow.o: ../DV-C/UI/mainwindow.cpp ../DV-C/UI/mainwindow.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_mainwindow.h
+		../DV-C/UI/glwidget.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl \
+		../DV-C/glm/gtx/transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.inl \
+		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
+		ui_mainwindow.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../DV-C/UI/mainwindow.cpp
+
+glwidget.o: ../DV-C/UI/glwidget.cpp ../DV-C/UI/glwidget.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		../../../../Qt/5.11.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl \
+		../DV-C/glm/gtx/transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.hpp \
+		../DV-C/glm/gtc/matrix_transform.inl \
+		../DV-C/glm/gtx/transform.inl \
+		../DV-C/glm/gtc/type_ptr.hpp \
+		../DV-C/glm/gtc/quaternion.hpp \
+		../DV-C/glm/gtc/constants.hpp \
+		../DV-C/glm/gtc/constants.inl \
+		../DV-C/glm/gtc/quaternion.inl \
+		../DV-C/glm/gtc/type_ptr.inl \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/Jellyfish/head.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QFile \
+		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTextStream \
+		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qtextstream.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../DV-C/UI/glwidget.cpp
+
+glew.o: ../DV-C/glew-1.10.0/src/glew.c ../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glew-1.10.0/include/GL/wglew.h \
+		../DV-C/glew-1.10.0/include/GL/glxew.h
+	$(CC) -c $(CFLAGS) $(INCPATH) -o glew.o ../DV-C/glew-1.10.0/src/glew.c
+
+vbo.o: ../DV-C/glData/vbo.cpp ../DV-C/glData/vbo.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vbo.o ../DV-C/glData/vbo.cpp
+
+vao.o: ../DV-C/glData/vao.cpp ../DV-C/glData/vao.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vao.o ../DV-C/glData/vao.cpp
+
+jellyfish.o: ../DV-C/Jellyfish/jellyfish.cpp ../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o jellyfish.o ../DV-C/Jellyfish/jellyfish.cpp
+
+head.o: ../DV-C/Jellyfish/head.cpp ../DV-C/Jellyfish/head.h \
+		../DV-C/Jellyfish/jellyfish.h \
+		../DV-C/glew-1.10.0/include/GL/glew.h \
+		../DV-C/glData/vbo.h \
+		../DV-C/glData/vao.h \
+		../DV-C/glm/glm.hpp \
+		../DV-C/glm/detail/_fixes.hpp \
+		../DV-C/glm/fwd.hpp \
+		../DV-C/glm/detail/type_int.hpp \
+		../DV-C/glm/detail/setup.hpp \
+		../DV-C/glm/detail/type_float.hpp \
+		../DV-C/glm/detail/type_vec.hpp \
+		../DV-C/glm/detail/precision.hpp \
+		../DV-C/glm/detail/type_mat.hpp \
+		../DV-C/glm/vec2.hpp \
+		../DV-C/glm/detail/type_vec2.hpp \
+		../DV-C/glm/detail/_swizzle.hpp \
+		../DV-C/glm/detail/_swizzle_func.hpp \
+		../DV-C/glm/detail/type_vec2.inl \
+		../DV-C/glm/vec3.hpp \
+		../DV-C/glm/detail/type_vec3.hpp \
+		../DV-C/glm/detail/type_vec3.inl \
+		../DV-C/glm/vec4.hpp \
+		../DV-C/glm/detail/type_vec4.hpp \
+		../DV-C/glm/detail/type_vec4.inl \
+		../DV-C/glm/mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.hpp \
+		../DV-C/glm/detail/type_mat2x2.inl \
+		../DV-C/glm/mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.hpp \
+		../DV-C/glm/detail/type_mat2x3.inl \
+		../DV-C/glm/mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.hpp \
+		../DV-C/glm/detail/type_mat2x4.inl \
+		../DV-C/glm/mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.hpp \
+		../DV-C/glm/detail/type_mat3x2.inl \
+		../DV-C/glm/mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.hpp \
+		../DV-C/glm/detail/type_mat3x3.inl \
+		../DV-C/glm/mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.hpp \
+		../DV-C/glm/detail/type_mat3x4.inl \
+		../DV-C/glm/mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.hpp \
+		../DV-C/glm/detail/type_mat4x2.inl \
+		../DV-C/glm/mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.hpp \
+		../DV-C/glm/detail/type_mat4x3.inl \
+		../DV-C/glm/mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.hpp \
+		../DV-C/glm/detail/type_mat4x4.inl \
+		../DV-C/glm/trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.hpp \
+		../DV-C/glm/detail/func_trigonometric.inl \
+		../DV-C/glm/detail/_vectorize.hpp \
+		../DV-C/glm/detail/type_vec1.hpp \
+		../DV-C/glm/detail/type_vec1.inl \
+		../DV-C/glm/exponential.hpp \
+		../DV-C/glm/detail/func_exponential.hpp \
+		../DV-C/glm/detail/func_exponential.inl \
+		../DV-C/glm/detail/func_vector_relational.hpp \
+		../DV-C/glm/detail/func_vector_relational.inl \
+		../DV-C/glm/common.hpp \
+		../DV-C/glm/detail/func_common.hpp \
+		../DV-C/glm/detail/func_common.inl \
+		../DV-C/glm/packing.hpp \
+		../DV-C/glm/detail/func_packing.hpp \
+		../DV-C/glm/detail/func_packing.inl \
+		../DV-C/glm/detail/type_half.hpp \
+		../DV-C/glm/detail/type_half.inl \
+		../DV-C/glm/geometric.hpp \
+		../DV-C/glm/detail/func_geometric.hpp \
+		../DV-C/glm/detail/func_geometric.inl \
+		../DV-C/glm/matrix.hpp \
+		../DV-C/glm/detail/func_matrix.hpp \
+		../DV-C/glm/detail/func_matrix.inl \
+		../DV-C/glm/vector_relational.hpp \
+		../DV-C/glm/integer.hpp \
+		../DV-C/glm/detail/func_integer.hpp \
+		../DV-C/glm/detail/func_integer.inl
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o head.o ../DV-C/Jellyfish/head.cpp
+
+qrc_shaders.o: qrc_shaders.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_shaders.o qrc_shaders.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
+moc_glwidget.o: moc_glwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_glwidget.o moc_glwidget.cpp
+
 ####### Install
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/opt/DV-C/bin || mkdir -p $(INSTALL_ROOT)/opt/DV-C/bin
-	$(DEL_FILE) -r $(INSTALL_ROOT)/opt/DV-C/bin/DV-C.app
-	
-	-$(QINSTALL) DV-C.app $(INSTALL_ROOT)/opt/DV-C/bin/DV-C.app
+install:  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) -r $(INSTALL_ROOT)/opt/DV-C/bin/DV-C.app
-	-$(DEL_DIR) $(INSTALL_ROOT)/opt/DV-C/bin/ 
-
-
-install: install_target  FORCE
-
-uninstall: uninstall_target  FORCE
+uninstall:  FORCE
 
 FORCE:
 
