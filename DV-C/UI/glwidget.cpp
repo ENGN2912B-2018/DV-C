@@ -29,10 +29,9 @@ void GLWidget::initializeGL() {
     glClearColor(0.f, 0.5f, 0.5f, 0.f);
 
     m_program = createShaderProgram(":/shader/shader.vert", ":/shader/shader.frag");
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     m_jelly = std::make_unique<jellyfish>();
-    //m_jelly = std::make_unique<head>();
     m_jelly->initializeShape();
     m_jelly->setVertexData(m_jelly->getVertexData(), m_jelly->getVertexSize(), m_jelly->getVertexNumber());
     m_jelly->buildVAO();
@@ -50,7 +49,7 @@ void GLWidget::paintGL() {
     glUniformMatrix4fv(glGetUniformLocation(m_program, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(m_view));
     glUniformMatrix4fv(glGetUniformLocation(m_program, "projMatrix"), 1, GL_FALSE, glm::value_ptr(m_projection));
 
-    glm::vec4 color = glm::vec4(1.f, 1.f, 1.f, 1.f);
+    glm::vec4 color = glm::vec4(0.f, 0.f, 0.2f, 1.f);
     glUniform4fv(glGetUniformLocation(m_program, "color"), 1, glm::value_ptr(color));
 
     m_jelly->draw();
