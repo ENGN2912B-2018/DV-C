@@ -6,9 +6,14 @@
 #include <QWheelEvent>
 
 GLWidget::GLWidget(QGLFormat format, QWidget *parent) : QGLWidget(format, parent),
-    m_angleX(-0.06), m_angleY(0.5f), m_angleZ(20.f)
-{
+    m_angleX(-0.06), m_angleY(0.5f), m_angleZ(20.f),
+    m_timer(this) , m_fps(60.f), m_increment(0)
 
+{
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(tick()));
+    m_timer.start(1000.0f/m_fps);
+    m_tick = 1.0;
+    m_angle = 0.f;
 }
 
 GLWidget::~GLWidget() {
@@ -43,6 +48,8 @@ void GLWidget::initializeGL() {
 void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    float time = m_increment++ / static_cast<float>(m_fps);
+
     glUseProgram(m_program);
 
     glUniformMatrix4fv(glGetUniformLocation(m_program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(m_model));
@@ -52,7 +59,12 @@ void GLWidget::paintGL() {
     glm::vec4 color = glm::vec4(0.f, 0.f, 0.2f, 1.f);
     glUniform4fv(glGetUniformLocation(m_program, "color"), 1, glm::value_ptr(color));
 
+    glUniform1f(glGetUniformLocation(m_program, "pi"), M_PI);
+
+    glUniform1f(glGetUniformLocation(m_program, "time"), time);
+
     m_jelly->draw();
+
     glUseProgram(0);
 }
 
@@ -142,4 +154,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *e){
 void GLWidget::wheelEvent(QWheelEvent *e){
     m_angleZ -= e->delta() / 100.f;
     setCameraMatrices();
+}
+
+void GLWidget::tick(){
+    m_tick += 1;
+    m_angle += M_PI/60.f;
+    if(m_angle >= 2.f*M_PI){
+        m_angle = 0.f;
+    }
+    update();
 }

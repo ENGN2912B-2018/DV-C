@@ -10,6 +10,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Jellyfish/jellyfish.h"
 #include "Jellyfish/head.h"
+#include <QTimer>
 
 
 class GLWidget : public QGLWidget
@@ -32,6 +33,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
     void wheelEvent(QWheelEvent *e);
 
+protected slots:
+    void tick();
+
 private:
     GLuint m_program;
     glm::mat4x4 m_model;
@@ -41,6 +45,13 @@ private:
 
     float m_angleX, m_angleY, m_angleZ;
     QPoint m_prevMPos;
+
+    QTimer m_timer;
+    float m_fps;
+    float m_tick;
+    float m_angle;
+    int m_increment;
+
 };
 
 #endif // GLWIDGET_H
