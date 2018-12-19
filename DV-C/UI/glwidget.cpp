@@ -63,6 +63,7 @@ void GLWidget::paintGL() {
     glUniform1f(glGetUniformLocation(m_program, "pi"), M_PI);
 
     glUniform1f(glGetUniformLocation(m_program, "time"), time);
+    //std::cout<<time<<std::endl;
 
     glUniform3fv(glGetUniformLocation(m_program, "center"), 1, glm::value_ptr(m_jelly->getCenter()));
 

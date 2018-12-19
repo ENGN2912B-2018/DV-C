@@ -17,17 +17,19 @@ out vec4 worldNormal;
 
 void main(void)
 {
-    float dist= abs(distance(position.xz, center.xz));
+    //float dist= abs(distance(position.xz, center.xz));
+    float distx=position.x - center.x;
+    float distz= position.z - center.z;
     float currTime = time+position.y;
     float offset = smoothstep(0.0, 1.0, max(0.f, -position.y-0.8f)/5.f);
-    vec3 animate = (vec3(position.x, 10.f-position.y, position.z)/70.f*sin(currTime)) * (1.f-offset);
-    vec3 pos = position;
-    float xTime = time+dist;
-    pos.x += pos.x/10.f*sin(xTime);
-    pos.z += pos.z/10.f*sin(xTime);
-    pos = pos*weight.x + pos*weight.y + pos*weight.z + pos*weight.w;
-    //find the center coordinates and calculate the distance and currTime according to that distance
-    pos.y += 0.5*time;
+    vec3 animate = (vec3(position.x, position.y, position.z)/100.f*sin(currTime)) * (1.f-offset);
+    vec3 pos = position+animate;
+    float xTime = time+position.y*0.3f;
+    pos.x += distx*0.3f*(cos(xTime));
+    pos.z += distz*0.3f*(cos(xTime));
+    //if(mod(xTime, 0.00001f) <0.000009f){
+        pos.y += 0.5f*xTime;
+    //}
     worldNormal = projMatrix * viewMatrix * modelMatrix * vec4(normal, 0.0);
     gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0);
     fragC = color;
