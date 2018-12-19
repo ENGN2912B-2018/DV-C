@@ -27,6 +27,7 @@ public:
     virtual int getVertexNumber();
     virtual int getVertexSize();
     void readOBJ(const char *path);
+    glm::vec3 getCenter();
 
 protected:
     std::vector<GLfloat> m_vertices;
@@ -38,6 +39,7 @@ private:
     GLsizeiptr m_size;
     int m_numberOfVertices;
     std::unique_ptr<VAO> m_VAO;
+    glm::vec3 m_center;
 
 };
 

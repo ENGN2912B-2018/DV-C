@@ -4,9 +4,10 @@
 #include <QTextStream>
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include "glm/gtx/string_cast.hpp"
 
 GLWidget::GLWidget(QGLFormat format, QWidget *parent) : QGLWidget(format, parent),
-    m_angleX(-0.06), m_angleY(0.5f), m_angleZ(20.f),
+    m_angleX(-0.03f), m_angleY(0.3f), m_angleZ(60.f),
     m_timer(this) , m_fps(60.f), m_increment(0)
 
 {
@@ -62,6 +63,8 @@ void GLWidget::paintGL() {
     glUniform1f(glGetUniformLocation(m_program, "pi"), M_PI);
 
     glUniform1f(glGetUniformLocation(m_program, "time"), time);
+
+    glUniform3fv(glGetUniformLocation(m_program, "center"), 1, glm::value_ptr(m_jelly->getCenter()));
 
     m_jelly->draw();
 
@@ -134,7 +137,7 @@ GLuint GLWidget::createShader(GLenum shaderType, const char *filepath){
 
 void GLWidget::setCameraMatrices() {
     m_model = glm::mat4x4(1.f);
-    m_view = glm::translate(glm::vec3(0, 0, -m_angleZ)) * glm::rotate(m_angleY, glm::vec3(1,0,0))*
+    m_view = glm::translate(glm::vec3(0, -20.f, -m_angleZ)) * glm::rotate(m_angleY, glm::vec3(1,0,0))*
             glm::rotate(m_angleX, glm::vec3(0,1,0));
     m_projection = glm::perspective(0.8f, static_cast<float>(width()/height()), 0.1f, 100.f);
     update();

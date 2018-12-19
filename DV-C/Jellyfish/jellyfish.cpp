@@ -7,7 +7,8 @@ jellyfish::jellyfish():
     m_size(0),
     m_numberOfVertices(0),
     m_VAO(nullptr),
-    m_vertices()
+    m_vertices(),
+    m_center(glm::vec3(0.f))
 {
 
 }
@@ -70,6 +71,9 @@ void jellyfish::readOBJ(const char *path){
         if(std::strcmp(lineHeader, "v") == 0){
             glm::vec3 vertex;
             std::fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+            if(vertex.y > m_center.y){
+                m_center = vertex;
+            }
             m_vert.push_back(vertex);
         }
         else if(std::strcmp(lineHeader, "vn") == 0){
@@ -126,4 +130,8 @@ void jellyfish::readOBJ(const char *path){
 
 void jellyfish::initializeShape(){
     readOBJ("/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/Jellyfish/esen.obj");
+}
+
+glm::vec3 jellyfish::getCenter(){
+    return m_center;
 }
