@@ -26,6 +26,7 @@ The code can be run on qt creator or could be compiled with the CMake file.
 ### - Graphical Interface
 The graphical interface consists of a main window that contains the jellyfish scene. The camera in the scene can be zoomed in and out by middle mouse button wheel. Any mouse button pressed and moved will rotate the scene so the jellyfish can be seen from all angles.
 ### - Data Visualization
+The data consists of the object (.obj) file that was created in blender. The team has written a parser to understand 
 ### - Communications Protocols
 ### - Threading and Concurrency
 ### - Exception Handling
