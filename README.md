@@ -12,6 +12,7 @@ ENGN 2912B Scientific Programming in C++ 12/2018
 
 ## Software Architectural Design (as appropriate)
 ### - Required External Libraries
+This project uses Qt, Glew 1.10 and glm and openGL libraries as well as the standard library. The glew library is already included in the source code repository.
 ### - Functional Block Diagrams
 ### - Data Flow Diagrams
 ### - UML Diagrams showing Object Definition/Inheritance
@@ -19,10 +20,11 @@ The objective of this project is model accurate jellyfish behavior for various u
 ## Build Instructions
 
 ## Usage Documentation
-The code can be run on qt creator.
+The code can be run on qt creator or could be compiled with the CMake file.
 
 ## Interface Descriptions (as appropriate)
 ### - Graphical Interface
+The graphical interface consists of a main window that contains the jellyfish scene. The camera in the scene can be zoomed in and out by middle mouse button wheel. Any mouse button pressed and moved will rotate the scene so the jellyfish can be seen from all angles.
 ### - Data Visualization
 ### - Communications Protocols
 ### - Threading and Concurrency
