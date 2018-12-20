@@ -7,7 +7,7 @@
 #include "glm/gtx/string_cast.hpp"
 
 GLWidget::GLWidget(QGLFormat format, QWidget *parent) : QGLWidget(format, parent),
-    m_angleX(-0.03f), m_angleY(0.3f), m_angleZ(60.f),
+    m_angleX(-0.03f), m_angleY(0.3f), m_angleZ(97.f),
     m_timer(this) , m_fps(60.f), m_increment(0)
 
 {
@@ -63,7 +63,6 @@ void GLWidget::paintGL() {
     glUniform1f(glGetUniformLocation(m_program, "pi"), M_PI);
 
     glUniform1f(glGetUniformLocation(m_program, "time"), time);
-    //std::cout<<time<<std::endl;
 
     glUniform3fv(glGetUniformLocation(m_program, "center"), 1, glm::value_ptr(m_jelly->getCenter()));
 
@@ -157,6 +156,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *e){
 
 void GLWidget::wheelEvent(QWheelEvent *e){
     m_angleZ -= e->delta() / 100.f;
+    //std::cout<< m_angleZ<<std::endl;
     setCameraMatrices();
 }
 
