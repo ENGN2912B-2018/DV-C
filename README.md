@@ -17,12 +17,9 @@ This project uses Qt, Glew 1.10 and glm and openGL libraries as well as the stan
 ### - Data Flow Diagrams
 ### - UML Diagrams showing Object Definition/Inheritance
 The objective of this project is model accurate jellyfish behavior for various uses in robotics, gaming and animation. The project is user interactive in which user can choose different modes of behavior.
-## Build Instructions
-
-## Usage Documentation
-The code can be run on qt creator or could be compiled with the CMake file.
 
 ## Interface Descriptions (as appropriate)
+
 ### - Graphical Interface
 The graphical interface consists of a main window that contains the jellyfish scene. The camera in the scene can be zoomed in and out by middle mouse button wheel. Any mouse button pressed and moved will rotate the scene so the jellyfish can be seen from all angles.
 ### - Data Visualization
@@ -37,7 +34,9 @@ The necessary checks were inserted for errors that can happen in the program. Si
 
 ### - Operating system(s) and software compiler/library version(s) tested
 ### - Description of functional testing to date
+Most of the testing was done visually since the project is very visual oriented. During the writing of the software cout statements was used to ensure the data is read correctly along with error handling. The testing is done by comparing visual videos of jellyfish moving with the movement of the jellyfish in the software.
 ### - Instructions for compiling and running the software
+The software can be run on qtCreator easily by opening the .pro file in the repository or can be run with the CMake file in the repository as well.
 
 ## Conclusions
 ### - Major Accomplishments
@@ -49,3 +48,4 @@ The necessary checks were inserted for errors that can happen in the program. Si
 
 ## Author Contributions
 ### - Description of each authors' contributions to software development
+Ayse Sena Demir - Ayse has created the GUI for the program, the Blender program, has written the openGL code for VAO, VBO and the openGL commands, the jellyfish class and the data parser, the shaders for the program and the modelling of the jellyfish in xz plane.
