@@ -28,8 +28,10 @@ The graphical interface consists of a main window that contains the jellyfish sc
 ### - Data Visualization
 The data consists of the object (.obj) file that was created in blender. The team has written a parser to decode the data that is in the format as a vertex represented as "v xCoord yCoord zCoord", a normal represented as "vn xCoord yCoord zCoord" and a face represented as "f firstVertexNumber//firstVertexNormal secondVertexNumber//secondVertexNormal thirdVertexNumber//thirdVertexNormal". A face represents a triangle on the jellyfish model. This data is parsed by readOBJ file in the jellyfish class and the correct parts are sent to openGL through Vertex Buffer Object (VBO) and Vertex Array Object (VAO) classes so the openGL can draw and animate the shape in the shaders.
 ### - Communications Protocols
+Our program does not deal with the transfer of data between computers, processes or threads so there is not description for communication protocols.
 ### - Threading and Concurrency
 ### - Exception Handling
+The necessary checks were inserted for errors that can happen in the program. Since the user interaction is limited most errors can happen from portability issues. We have implemented the necessary checks for reading files as well as shader reading, linking and compiling issues.
 
 ## Testing and Evaluation
 
