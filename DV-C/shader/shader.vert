@@ -20,16 +20,15 @@ void main(void)
     //float dist= abs(distance(position.xz, center.xz));
     float distx=position.x - center.x;
     float distz= position.z - center.z;
+    float disty= (center.y - position.y)/center.y;
     float currTime = time+position.y;
     float offset = smoothstep(0.0, 1.0, max(0.f, -position.y-0.8f)/5.f);
     vec3 animate = (vec3(position.x, position.y, position.z)/100.f*sin(currTime)) * (1.f-offset);
     vec3 pos = position+animate;
     float xTime = time+position.y*0.3f;
-    pos.x += distx*0.3f*(cos(xTime));
-    pos.z += distz*0.3f*(cos(xTime));
-    //if(mod(xTime, 0.00001f) <0.000009f){
-        pos.y += 0.5f*xTime;
-    //}
+    pos.x += distx*0.3*(cos(xTime));
+    pos.z += distz*0.3*(cos(xTime));
+    pos.y += 0.5f*xTime;
     worldNormal = projMatrix * viewMatrix * modelMatrix * vec4(normal, 0.0);
     gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(pos, 1.0);
     fragC = color;
