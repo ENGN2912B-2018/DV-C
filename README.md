@@ -21,7 +21,7 @@ The goal of this project is to assemble the base work for creating a realistic m
 This project uses Qt, Glew 1.10 and glm and openGL libraries as well as the standard library. The glew library is already included in the source code repository.
 ### - Functional Block Diagrams
 
-*insert image*
+![Jellyfish Cover Image](https://github.com/ENGN2912B-2018/DV-C/blob/master/functionalmap.png)
 
 ## Interface Descriptions (as appropriate)
 
