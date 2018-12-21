@@ -67,6 +67,6 @@ The project has the potential to be extended by utilzing the extracted head shap
 
 ## Author Contributions
 ### - Description of each authors' contributions to software development
-Ayse Sena Demir - Ayse has created the GUI for the program, the Blender program, has written the openGL code for VAO, VBO and the openGL commands, the jellyfish class and the data parser, the shaders for the program and the modelling of the jellyfish in xz plane.
+Ayse Sena Demir - Ayse has coded the GUI for the program, the openGL code for VAO, VBO and the openGL commands, the jellyfish class and the data parser, the shaders for the program and the animation of the jellyfish.
 
 Amber Chevannes - Amber has contacted research partners, extracted the outlines and base 3D shapes from the video datasets, created 3D models to represent the change in the head shape over time.
