@@ -20,7 +20,11 @@ The goal of this project is to assemble the base work for creating a realistic m
 ### - Required External Libraries
 This project uses Qt, Glew 1.10 and glm and openGL libraries as well as the standard library. The glew library is already included in the source code repository.
 ### - Functional Block Diagrams
+
+*insert image*
+
 ### - Data Flow Diagrams
+*not sure if we need this*
 ### - UML Diagrams showing Object Definition/Inheritance
 The objective of this project is model accurate jellyfish behavior for various uses in robotics, gaming and animation. The project is user interactive in which user can choose different modes of behavior.
 
@@ -40,7 +44,6 @@ Our program does not deal with the transfer of data between computers, processes
 The necessary checks were inserted for errors that can happen in the program. Since the user interaction is limited most errors can happen from portability issues. We have implemented the necessary checks for reading files as well as shader reading, linking and compiling issues.
 
 ## Testing and Evaluation
-
 ### - Operating system(s) and software compiler/library version(s) tested
 ### - Description of functional testing to date
 Most of the testing was done visually since the project is very visual oriented. During the writing of the software cout statements was used to ensure the data is read correctly along with error handling. The testing is done by comparing visual videos of jellyfish moving with the movement of the jellyfish in the software.
@@ -49,7 +52,11 @@ The software can be run on qtCreator easily by opening the .pro file in the repo
 
 ## Conclusions
 ### - Major Accomplishments
+The team was able to reach out to researchers in animal movement and soft robotics to get a better understanding of the work done in the past. The current mathematical modeling efforts of jellyfish were surveyed and an approximation method of the animal motion was created. A graphical user interface was create in as well as a model of the jellyfish hood and tentacle was rendered within the scene. An approximation of the jellyfish movement was implemented into an animation. The jellyfish video data from the research partners was analyzed and obj files of the jellyfish hood over time was created.
+
 ### - Results of the software development effort
+The team was able to produce a rendered scene of the jellyfish with an approximation of the movement animation.
+
 ### - Were you successful in meeting all goals and objectives?  What didn't work?  What would take more time?
 
 ## Future Work
