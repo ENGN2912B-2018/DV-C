@@ -52,6 +52,7 @@ The team was able to reach out to researchers in animal movement and soft roboti
 The team was able to produce a rendered scene of the jellyfish with an approximation of the movement animation.
 
 ### - Were you successful in meeting all goals and objectives?  What didn't work?  What would take more time?
+The team was not successfull in capturing absolutely accurate movement however the team managed to get a good approximation. Working with video data did not work as well as approximating a sine wave for the movement according to the y coordinate and time for xz expansion and contraction. 
 
 ## Future Work
 ### - Description of potential future software expansions and software features
