@@ -30,8 +30,8 @@ macx {
     CONFIG += c++11
 }
 
-INCLUDEPATH += UI glm glew-1.10.0/include
-DEPENDPATH += UI glm glew-1.10.0/include
+INCLUDEPATH += Jellyfish UI glm glew-1.10.0/include
+DEPENDPATH += Jellyfish UI glm glew-1.10.0/include
 
 SOURCES += \
     UI/main.cpp \
@@ -40,8 +40,7 @@ SOURCES += \
     glew-1.10.0/src/glew.c \
     glData/vbo.cpp \
     glData/vao.cpp \
-    Jellyfish/jellyfish.cpp \
-    Jellyfish/head.cpp
+    Jellyfish/jellyfish.cpp
 
 HEADERS += \
     UI/mainwindow.h \
@@ -49,8 +48,7 @@ HEADERS += \
     glew-1.10.0/include/GL/glew.h \
     glData/vbo.h \
     glData/vao.h \
-    Jellyfish/jellyfish.h \
-    Jellyfish/head.h
+    Jellyfish/jellyfish.h
 
 FORMS += \
     UI/mainwindow.ui

@@ -1,8 +1,10 @@
 #version 400 core
-in vec3 fragC;
+in vec4 fragC;
+in vec4 worldNormal;
+
 out vec4 fragColor;
 
 void main(void)
 {
-    fragColor = vec4(0.5f, 0.2f, 0.f, 1.f);
+    fragColor = dot(worldNormal, worldNormal)*fragC;
 }
