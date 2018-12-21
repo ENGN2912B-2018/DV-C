@@ -61,7 +61,7 @@ The team was able to produce a rendered scene of the jellyfish with an approxima
 
 ## Future Work
 ### - Description of potential future software expansions and software features
-The project has the potential to be extended by utilzing the produced obj files to create an animation and ultimately extract a function of the vertice movement of the outer jellyfish head within space. In addition, many functional equations for the flow of water around the jellyfish along with the propulsion of the water within the jellyfish head. Approximations or incorporations of this data within the model could improve the realism. As well as many anatomical features were omitted from the project, so mapping of anatomically relevant colorings or textures to the rendering would also improve the realism.
+The project has the potential to be extended by utilzing the extracted head shape from the video files to create an animation and ultimately extract a function of the vertices movement of the outer jellyfish head within space. In addition, many functional equations for the flow of water around the jellyfish along with the propulsion of the water within the jellyfish head. Approximations or incorporations of this data within the model could improve the realism. As well as many anatomical features were omitted from the project, so mapping of anatomically relevant colorings or textures to the rendering would also improve the realism.
 
 ## Author Contributions
 ### - Description of each authors' contributions to software development
