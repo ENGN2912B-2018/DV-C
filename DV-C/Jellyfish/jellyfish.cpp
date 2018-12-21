@@ -158,7 +158,7 @@ void jellyfish::readMaterial(const char *path){
         else if(std::strcmp(lineHeader, "Ks") == 0){
             glm::vec3 specular;
             std::fscanf(file, "%f %f %f\n", &specular.x, &specular.y, &specular.z);
-            m_diffuse = specular;
+            m_specular = specular;
         }
         else {
             char commentBuffer[1000];
