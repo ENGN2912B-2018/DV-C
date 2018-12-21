@@ -7,7 +7,7 @@ ENGN 2912B Scientific Programming in C++ 12/2018
 
 ## Introduction
 
-![Jellyfish Cover Image](https://github.com/ENGN2912B-2018/DV-C/blob/master/jellycover.jpg)
+![Jellyfish Cover Image](https://github.com/ENGN2912B-2018/DV-C/Screen Shot 2018-12-20 at 23.56.58.png)
 
 ### - Project Overview
    This project will create a base work for realistic rendering and animating of the movement of a jellyfish model that can be extended or improved utilizing scientific programming techniques in C++. Providing a visual model of animal behavior has potential to improve the development of soft robots. A more physiologically  and environmentally modular model could provide valuable information for creation of soft robots. Our work provides an opportunity for soft robot developers to understand the animal behavior better in visual form and can provide groundwork for better understanding of animal behavior. 
