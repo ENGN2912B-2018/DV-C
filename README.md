@@ -23,19 +23,12 @@ This project uses Qt, Glew 1.10 and glm and openGL libraries as well as the stan
 
 *insert image*
 
-### - Data Flow Diagrams
-*not sure if we need this*
-### - UML Diagrams showing Object Definition/Inheritance
-The objective of this project is model accurate jellyfish behavior for various uses in robotics, gaming and animation. The project is user interactive in which user can choose different modes of behavior.
-
 ## Interface Descriptions (as appropriate)
 
 ### - Graphical Interface
 The graphical interface consists of a main window that contains the jellyfish scene. The camera in the scene can be zoomed in and out by middle mouse button wheel. Any mouse button pressed and moved will rotate the scene so the jellyfish can be seen from all angles.
 ### - Data Visualization
 The data consists of the object (.obj) file that was created in blender. The team has written a parser to decode the data that is in the format as a vertex represented as "v xCoord yCoord zCoord", a normal represented as "vn xCoord yCoord zCoord" and a face represented as "f firstVertexNumber//firstVertexNormal secondVertexNumber//secondVertexNormal thirdVertexNumber//thirdVertexNormal". A face represents a triangle on the jellyfish model. This data is parsed by readOBJ file in the jellyfish class and the correct parts are sent to openGL through Vertex Buffer Object (VBO) and Vertex Array Object (VAO) classes so the openGL can draw and animate the shape in the shaders.
-
-*Insert images from the analysis of the Jellyfish Shape*
 
 ### - Communications Protocols
 Our program does not deal with the transfer of data between computers, processes or threads so there is not description for communication protocols.
@@ -45,6 +38,7 @@ The necessary checks were inserted for errors that can happen in the program. Si
 
 ## Testing and Evaluation
 ### - Operating system(s) and software compiler/library version(s) tested
+The project works on Mac OS.
 ### - Description of functional testing to date
 Most of the testing was done visually since the project is very visual oriented. During the writing of the software cout statements was used to ensure the data is read correctly along with error handling. The testing is done by comparing visual videos of jellyfish moving with the movement of the jellyfish in the software.
 ### - Instructions for compiling and running the software
