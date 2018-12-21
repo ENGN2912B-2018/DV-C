@@ -6,6 +6,9 @@ Ayse Sena Demir (ayse_demir@brown.edu) and Amber Chevannes (amber_chevannes@gmai
 ENGN 2912B Scientific Programming in C++ 12/2018
 
 ## Introduction
+
+![Jellyfish Cover Image](https://raw.githubusercontent.com/ENGN2912B-2018/DV-C/master/DV-C.png)
+
 ### - Project Overview
    This project will create a base work for realistic rendering and animating of the movement of a jellyfish model that can be extended or improved utilizing scientific programming techniques in C++. Providing a visual model of animal behavior has potential to improve the development of soft robots. A more physiologically  and environmentally modular model could provide valuable information for creation of soft robots. Our work provides an opportunity for soft robot developers to understand the animal behavior better in visual form and can provide groundwork for better understanding of animal behavior. 
 	Game and animation productions has been improving to become more and more realistic as the technology improves both in software computation time and in hardware capabilities. The producers has been looking for opportunities to create realism especially in video game industry to immerse players into games.
