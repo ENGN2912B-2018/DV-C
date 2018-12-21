@@ -25,8 +25,8 @@ void main(void)
     vec3 animate = (vec3(position.x, position.y, position.z)/100.f*sin(currTime)) * (1.f-offset);
     vec3 pos = position+animate;
     float xTime = time+position.y*0.3f;
-    pos.x += distx*0.3f*(cos(xTime));
-    pos.z += distz*0.3f*(cos(xTime));
+    pos.x += distx*0.2f*(cos(xTime));
+    pos.z += distz*0.2f*(cos(xTime));
     pos.y += 0.5f*xTime;
 
     worldNormal = projMatrix * viewMatrix * modelMatrix * vec4(normal, 0.0);

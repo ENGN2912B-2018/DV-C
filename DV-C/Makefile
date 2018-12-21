@@ -56,8 +56,7 @@ SOURCES       = UI/main.cpp \
 		glew-1.10.0/src/glew.c \
 		glData/vbo.cpp \
 		glData/vao.cpp \
-		Jellyfish/jellyfish.cpp \
-		Jellyfish/head.cpp qrc_shaders.cpp \
+		Jellyfish/jellyfish.cpp qrc_shaders.cpp \
 		moc_mainwindow.cpp \
 		moc_glwidget.cpp
 OBJECTS       = main.o \
@@ -67,7 +66,6 @@ OBJECTS       = main.o \
 		vbo.o \
 		vao.o \
 		jellyfish.o \
-		head.o \
 		qrc_shaders.o \
 		moc_mainwindow.o \
 		moc_glwidget.o
@@ -213,6 +211,7 @@ DIST          = shader/shader.vert \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/toolchain.prf \
@@ -245,15 +244,13 @@ DIST          = shader/shader.vert \
 		glew-1.10.0/include/GL/glew.h \
 		glData/vbo.h \
 		glData/vao.h \
-		Jellyfish/jellyfish.h \
-		Jellyfish/head.h UI/main.cpp \
+		Jellyfish/jellyfish.h UI/main.cpp \
 		UI/mainwindow.cpp \
 		UI/glwidget.cpp \
 		glew-1.10.0/src/glew.c \
 		glData/vbo.cpp \
 		glData/vao.cpp \
-		Jellyfish/jellyfish.cpp \
-		Jellyfish/head.cpp
+		Jellyfish/jellyfish.cpp
 QMAKE_TARGET  = DV-C
 DESTDIR       = 
 TARGET        = DV-C.app/Contents/MacOS/DV-C
@@ -414,6 +411,7 @@ Makefile: DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf 
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.11.2/clang_64/mkspecs/features/toolchain.prf \
@@ -588,6 +586,7 @@ Makefile: DV-C.pro ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf 
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.11.2/clang_64/mkspecs/features/toolchain.prf:
@@ -652,8 +651,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents shader/shaders.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.11.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents UI/mainwindow.h UI/glwidget.h glew-1.10.0/include/GL/glew.h glData/vbo.h glData/vao.h Jellyfish/jellyfish.h Jellyfish/head.h $(DISTDIR)/
-	$(COPY_FILE) --parents UI/main.cpp UI/mainwindow.cpp UI/glwidget.cpp glew-1.10.0/src/glew.c glData/vbo.cpp glData/vao.cpp Jellyfish/jellyfish.cpp Jellyfish/head.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents UI/mainwindow.h UI/glwidget.h glew-1.10.0/include/GL/glew.h glData/vbo.h glData/vao.h Jellyfish/jellyfish.h $(DISTDIR)/
+	$(COPY_FILE) --parents UI/main.cpp UI/mainwindow.cpp UI/glwidget.cpp glew-1.10.0/src/glew.c glData/vbo.cpp glData/vao.cpp Jellyfish/jellyfish.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents UI/mainwindow.ui $(DISTDIR)/
 
 
@@ -664,6 +663,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r DV-C.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -790,7 +790,6 @@ moc_mainwindow.cpp: ../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Heade
 		Jellyfish/jellyfish.h \
 		glData/vbo.h \
 		glData/vao.h \
-		Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		UI/mainwindow.h \
@@ -890,7 +889,6 @@ moc_glwidget.cpp: glew-1.10.0/include/GL/glew.h \
 		Jellyfish/jellyfish.h \
 		glData/vbo.h \
 		glData/vao.h \
-		Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		UI/glwidget.h \
@@ -1017,7 +1015,6 @@ main.o: UI/main.cpp UI/mainwindow.h \
 		Jellyfish/jellyfish.h \
 		glData/vbo.h \
 		glData/vao.h \
-		Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
@@ -1120,7 +1117,6 @@ mainwindow.o: UI/mainwindow.cpp UI/mainwindow.h \
 		Jellyfish/jellyfish.h \
 		glData/vbo.h \
 		glData/vao.h \
-		Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		ui_mainwindow.h \
@@ -1221,7 +1217,6 @@ glwidget.o: UI/glwidget.cpp UI/glwidget.h \
 		Jellyfish/jellyfish.h \
 		glData/vbo.h \
 		glData/vao.h \
-		Jellyfish/head.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QTimer \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		../../../../Qt/5.11.2/clang_64/lib/QtCore.framework/Headers/QFile \
@@ -1335,95 +1330,6 @@ jellyfish.o: Jellyfish/jellyfish.cpp Jellyfish/jellyfish.h \
 		glm/detail/func_integer.hpp \
 		glm/detail/func_integer.inl
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o jellyfish.o Jellyfish/jellyfish.cpp
-
-head.o: Jellyfish/head.cpp Jellyfish/head.h \
-		Jellyfish/jellyfish.h \
-		glew-1.10.0/include/GL/glew.h \
-		glData/vbo.h \
-		glData/vao.h \
-		glm/glm.hpp \
-		glm/detail/_fixes.hpp \
-		glm/fwd.hpp \
-		glm/detail/type_int.hpp \
-		glm/detail/setup.hpp \
-		glm/detail/type_float.hpp \
-		glm/detail/type_vec.hpp \
-		glm/detail/precision.hpp \
-		glm/detail/type_mat.hpp \
-		glm/vec2.hpp \
-		glm/detail/type_vec2.hpp \
-		glm/detail/_swizzle.hpp \
-		glm/detail/_swizzle_func.hpp \
-		glm/detail/type_vec2.inl \
-		glm/vec3.hpp \
-		glm/detail/type_vec3.hpp \
-		glm/detail/type_vec3.inl \
-		glm/vec4.hpp \
-		glm/detail/type_vec4.hpp \
-		glm/detail/type_vec4.inl \
-		glm/mat2x2.hpp \
-		glm/detail/type_mat2x2.hpp \
-		glm/detail/type_mat2x2.inl \
-		glm/mat2x3.hpp \
-		glm/detail/type_mat2x3.hpp \
-		glm/detail/type_mat2x3.inl \
-		glm/mat2x4.hpp \
-		glm/detail/type_mat2x4.hpp \
-		glm/detail/type_mat2x4.inl \
-		glm/mat3x2.hpp \
-		glm/detail/type_mat3x2.hpp \
-		glm/detail/type_mat3x2.inl \
-		glm/mat3x3.hpp \
-		glm/detail/type_mat3x3.hpp \
-		glm/detail/type_mat3x3.inl \
-		glm/mat3x4.hpp \
-		glm/detail/type_mat3x4.hpp \
-		glm/detail/type_mat3x4.inl \
-		glm/mat4x2.hpp \
-		glm/detail/type_mat4x2.hpp \
-		glm/detail/type_mat4x2.inl \
-		glm/mat4x3.hpp \
-		glm/detail/type_mat4x3.hpp \
-		glm/detail/type_mat4x3.inl \
-		glm/mat4x4.hpp \
-		glm/detail/type_mat4x4.hpp \
-		glm/detail/type_mat4x4.inl \
-		glm/trigonometric.hpp \
-		glm/detail/func_trigonometric.hpp \
-		glm/detail/func_trigonometric.inl \
-		glm/detail/_vectorize.hpp \
-		glm/detail/type_vec1.hpp \
-		glm/detail/type_vec1.inl \
-		glm/exponential.hpp \
-		glm/detail/func_exponential.hpp \
-		glm/detail/func_exponential.inl \
-		glm/detail/func_vector_relational.hpp \
-		glm/detail/func_vector_relational.inl \
-		glm/common.hpp \
-		glm/detail/func_common.hpp \
-		glm/detail/func_common.inl \
-		glm/packing.hpp \
-		glm/detail/func_packing.hpp \
-		glm/detail/func_packing.inl \
-		glm/detail/type_half.hpp \
-		glm/detail/type_half.inl \
-		glm/geometric.hpp \
-		glm/detail/func_geometric.hpp \
-		glm/detail/func_geometric.inl \
-		glm/matrix.hpp \
-		glm/detail/func_matrix.hpp \
-		glm/detail/func_matrix.inl \
-		glm/vector_relational.hpp \
-		glm/integer.hpp \
-		glm/detail/func_integer.hpp \
-		glm/detail/func_integer.inl \
-		glm/gtc/type_ptr.hpp \
-		glm/gtc/quaternion.hpp \
-		glm/gtc/constants.hpp \
-		glm/gtc/constants.inl \
-		glm/gtc/quaternion.inl \
-		glm/gtc/type_ptr.inl
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o head.o Jellyfish/head.cpp
 
 qrc_shaders.o: qrc_shaders.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_shaders.o qrc_shaders.cpp

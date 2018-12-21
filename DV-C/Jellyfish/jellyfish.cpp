@@ -23,13 +23,8 @@ void jellyfish::setVertexData(GLfloat *data, int size, int numVertices){
     m_numberOfVertices = numVertices;
 }
 
-void jellyfish::setAttribute(GLuint index, GLuint numberOfElement){
-
-}
-
 void jellyfish::buildVAO(){
     VBO vbo = VBO(m_data, m_size);
-    //VBO vbo(m_data, m_size);
     m_VAO = std::make_unique<VAO>(vbo, m_numberOfVertices);
 }
 
@@ -129,9 +124,46 @@ void jellyfish::readOBJ(const char *path){
 }
 
 void jellyfish::initializeShape(){
+
     readOBJ("/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/Jellyfish/esen.obj");
+    readMaterial("/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/Jellyfish/esen.mtl");
 }
 
 glm::vec3 jellyfish::getCenter(){
     return m_center;
+}
+
+void jellyfish::readMaterial(const char *path){
+    FILE *file = std::fopen(path, "r");
+    if (file == NULL){
+        std::cerr<< "File not open"<< std::endl;
+        return;
+    }
+    while(1){
+        char lineHeader[1000];
+        int res = std::fscanf(file, "%s", lineHeader);
+        if(res == EOF){
+            break;
+        }
+        if(std::strcmp(lineHeader, "Ka") == 0){
+            glm::vec3 ambient;
+            std::fscanf(file, "%f %f %f\n", &ambient.x, &ambient.y, &ambient.z);
+            m_ambient = ambient;
+        }
+        else if(std::strcmp(lineHeader, "Kd") == 0){
+            glm::vec3 diffuse;
+            std::fscanf(file, "%f %f %f\n", &diffuse.x, &diffuse.y, &diffuse.z);
+            m_diffuse = diffuse;
+        }
+        else if(std::strcmp(lineHeader, "Ks") == 0){
+            glm::vec3 specular;
+            std::fscanf(file, "%f %f %f\n", &specular.x, &specular.y, &specular.z);
+            m_diffuse = specular;
+        }
+        else {
+            char commentBuffer[1000];
+            std::fgets(commentBuffer, 1000, file);
+        }
+    }
+    std::fclose(file);
 }

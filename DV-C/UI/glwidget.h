@@ -9,7 +9,6 @@
 #include "glm/gtx/transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "Jellyfish/jellyfish.h"
-#include "Jellyfish/head.h"
 #include <QTimer>
 
 
