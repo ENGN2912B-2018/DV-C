@@ -42,7 +42,7 @@ The project works on Mac OS.
 ### - Description of functional testing to date
 Most of the testing was done visually since the project is very visual oriented. During the writing of the software cout statements was used to ensure the data is read correctly along with error handling. The testing is done by comparing visual videos of jellyfish moving with the movement of the jellyfish in the software.
 ### - Instructions for compiling and running the software
-The software can be run on qtCreator easily by opening the .pro file in the repository or can be run with the commands in the MakeFile in Debug as well.
+The software can be run on qtCreator easily by opening the .pro file in the repository or can be run with the commands in the MakeFile in DV-C as well.
 The readOBJ and readMaterial takes in absolute paths so tweaking with that code might be necessary to run the program.
 
 ## Conclusions
