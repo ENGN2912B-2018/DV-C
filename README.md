@@ -30,6 +30,9 @@ The objective of this project is model accurate jellyfish behavior for various u
 The graphical interface consists of a main window that contains the jellyfish scene. The camera in the scene can be zoomed in and out by middle mouse button wheel. Any mouse button pressed and moved will rotate the scene so the jellyfish can be seen from all angles.
 ### - Data Visualization
 The data consists of the object (.obj) file that was created in blender. The team has written a parser to decode the data that is in the format as a vertex represented as "v xCoord yCoord zCoord", a normal represented as "vn xCoord yCoord zCoord" and a face represented as "f firstVertexNumber//firstVertexNormal secondVertexNumber//secondVertexNormal thirdVertexNumber//thirdVertexNormal". A face represents a triangle on the jellyfish model. This data is parsed by readOBJ file in the jellyfish class and the correct parts are sent to openGL through Vertex Buffer Object (VBO) and Vertex Array Object (VAO) classes so the openGL can draw and animate the shape in the shaders.
+
+*Insert images from the analysis of the Jellyfish Shape*
+
 ### - Communications Protocols
 Our program does not deal with the transfer of data between computers, processes or threads so there is not description for communication protocols.
 ### - Threading and Concurrency
@@ -51,6 +54,7 @@ The software can be run on qtCreator easily by opening the .pro file in the repo
 
 ## Future Work
 ### - Description of potential future software expansions and software features
+The project has the potential to be extended by utilzing the produced obj files to create an animation and ultimately extract a function of the vertice movement of the outer jellyfish head within space. In addition, many functional equations for the flow of water around the jellyfish along with the propulsion of the water within the jellyfish head. Approximations or incorporations of this data within the model could improve the realism. As well as many anatomical features were omitted from the project, so mapping of anatomically relevant colorings or textures to the rendering would also improve the realism.
 
 ## Author Contributions
 ### - Description of each authors' contributions to software development
