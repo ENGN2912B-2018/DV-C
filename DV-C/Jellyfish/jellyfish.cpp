@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <thread>
+#include <QFuture>
+#include <QtCore>
 
 jellyfish::jellyfish():
     m_size(0),
@@ -49,6 +52,7 @@ int jellyfish::getVertexSize(){
 }
 
 void jellyfish::readOBJ(const char *path){
+
     std::vector<unsigned int> vertexIndices;
     std::vector<unsigned int> normalIndices;
     std::vector<glm::vec3> normals;
@@ -124,7 +128,6 @@ void jellyfish::readOBJ(const char *path){
 }
 
 void jellyfish::initializeShape(){
-
     readOBJ("/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/Jellyfish/esen.obj");
     readMaterial("/Users/senademir/Desktop/Jellyfish/DV-C/DV-C/Jellyfish/esen.mtl");
 }
